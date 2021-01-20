@@ -53,7 +53,7 @@ const Section2Right = () => {
               {news.map(item => (
                 <div key={item.id} className="col-xs-6 col-num-0"> <a
                   href="/vlast/179900_zachem_nam_premer_ekspertyi_ovozmojnyih_kandidatah_nadoljnost_glavyi_kabmina/"
-                  className="title"> <img src={item.post_image} alt="Зачем нам премьер? Эксперты о&amp;nbsp;возможных кандидатах на&amp;nbsp;должность главы кабмина" /> <span>{item.title_post}</span> </a>
+                  className="title"> <img src={item.post_image} alt="" /> <span>{item.title_post}</span> </a>
                 </div>
               ))}
             </div>
