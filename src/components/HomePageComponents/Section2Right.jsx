@@ -5,16 +5,15 @@ import { newsContext } from '../../contexts/NewsContext';
 const Section2Right = () => {
 
   const { news } = useContext(newsContext)
-  let randomNews = news[news.length - 1]
   return (
     <>
       <div className="col-lg-6 col-md-6 col-sm-6 hidden-print">
         <div className="line visible-xs mgb20 mgt0"></div>
         <div className="blockNews right-list">
           <div className="row">
-            {randomNews ? (
+            {news ? (
               <div className="col-xs-6 col-num-0"> <a href="/obschestvo/180255_vozvraschenie_vshkolu_nadolgoli/"
-                className="title"> <img src={randomNews.post_image} alt="Возвращение в&amp;nbsp;школу. Надолго&amp;nbsp;ли?" /> <span>{randomNews.title_post}</span> </a>
+                className="title"> <img src={news.results[news.results.length - 1].post_image} alt="Возвращение в&amp;nbsp;школу. Надолго&amp;nbsp;ли?" /> <span>{news.results[news.results.length - 1].title_post}</span> </a>
               </div>
             ) : (null)}
             <div className="col-xs-6 col-num-1">
@@ -50,12 +49,15 @@ const Section2Right = () => {
                 </span></a> </div>
             </div>
             <div className="row">
-              {news.map(item => (
-                <div key={item.id} className="col-xs-6 col-num-0"> <a
-                  href="/vlast/179900_zachem_nam_premer_ekspertyi_ovozmojnyih_kandidatah_nadoljnost_glavyi_kabmina/"
-                  className="title"> <img src={item.post_image} alt="" /> <span>{item.title_post}</span> </a>
-                </div>
-              ))}
+              {news ? (
+                news.results.map(item => (
+                  <div key={item.id} className="col-xs-6 col-num-0"> <a
+                    href="/vlast/179900_zachem_nam_premer_ekspertyi_ovozmojnyih_kandidatah_nadoljnost_glavyi_kabmina/"
+                    className="title"> <img src={item.post_image} alt="" /> <span>{item.title_post}</span> </a>
+                  </div>
+                ))
+              ) : (null)
+              }
             </div>
           </div>
         </div>

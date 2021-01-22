@@ -1,9 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { newsContext } from '../../contexts/NewsContext';
 
 const Section1 = () => {
   const { news } = useContext(newsContext)
-  let mainNews = news[news.length - 1]
+  const [state, setState] = useState(news)
+  useEffect(() => {
+    setState(news)
+  }, [news])
+
   return (
     <>
       <div className="row">
@@ -22,32 +26,38 @@ const Section1 = () => {
         <div className="col-sm-9 col-xs-12">
           <div className="mainNews">
             <div className="mainNewsOne">
-              {mainNews ? (
-                <div key={mainNews.id} className="one active"> <a
+              {state ? (
+                <div key={state.results[state.results.length - 1].id} className="one active"> <a
                   href="/vlast/180326_vproekte_novoy_redaktsii_konstitutsii_tsenzuryi_nebudet_ona_zapreschena_/"
-                  className="one-image"> <img src={mainNews.post_image} /> </a>
+                  className="one-image"> <img src={state.results[state.results.length - 1].post_image} /> </a>
                   <div className="h2"> <a
-                    href="#"><span>{mainNews.title_post}</span></a> </div>
+                    href="#"><span>{state.results[state.results.length - 1].title_post}</span></a> </div>
                 </div>
               ) : (
                 null
               )}
-              {news.map((item) => (
-                <div key={item.id} className="one"> <a
-                  href="/vlast/180326_vproekte_novoy_redaktsii_konstitutsii_tsenzuryi_nebudet_ona_zapreschena_/"
-                  className="one-image"> <img src={item.post_image} /> </a>
-                  <div className="h2"> <a
-                    href="#"><span>{item.title_post}</span></a> </div>
-                </div>
-              ))}
+              {news ? (
+                news.results.map((item) => (
+                  <div key={item.id} className="one"> <a
+                    href="/vlast/180326_vproekte_novoy_redaktsii_konstitutsii_tsenzuryi_nebudet_ona_zapreschena_/"
+                    className="one-image"> <img src={item.post_image} /> </a>
+                    <div className="h2"> <a
+                      href="#"><span>{item.title_post}</span></a> </div>
+                  </div>
+                ))
+              ) : (null)
+              }
             </div>
             <div className="mainNewsList">
-              {news.map((item) => (
-                <div key={item.id} className="hidden-xs"> <a
-                  href="#"
-                  className=" active"><span>{item.title_post}</span></a>
-                </div>
-              ))}
+              {news ? (
+                news.results.map((item) => (
+                  <div key={item.id} className="hidden-xs"> <a
+                    href="#"
+                    className=" active"><span>{item.title_post}</span></a>
+                  </div>
+                ))
+              ) : (null)
+              }
             </div>
           </div>
         </div>

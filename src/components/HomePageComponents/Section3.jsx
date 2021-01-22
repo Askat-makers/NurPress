@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { newsContext } from '../../contexts/NewsContext';
 
 const Section3 = () => {
@@ -13,18 +14,23 @@ const Section3 = () => {
       <div className="hidden-print">
         <div className="row">
           <div className="col-xs-12">
-            <div className="lineTitle"> Бизнес <div className="line"></div>
+            <div className="lineTitle"> Экономика <div className="line"></div>
             </div>
           </div>
         </div>
         <div className="row blockNews">
           <div className="row">
-            {economicsNews.map(item => (
-              <div key={item.id} className="col-sm-3 col-xs-6 "> <a
-                href="/biznes_info/180332_vyigodnyie_pokupki_onlayn_MegaCom_zapuskaet_sobstvennyiy_marketpleys_MegaShop/"
-                className="title"> <img src={item.post_image} alt="Выгодные покупки онлайн: MegaCom запускает собственный маркетплейс MegaShop" /> <span>{item.title_post}</span> </a>
-              </div>
-            ))}
+            {economicsNews ? (
+              economicsNews.results.map(item => (
+                <div key={item.id} className="col-sm-3 col-xs-6 ">
+                  <Link to={`/news-detail${item.id}`} className="title">
+                    <img src={item.post_image} alt="PHOTO" />
+                    <span>{item.title_post}</span>
+                  </Link>
+                </div>
+              ))
+            ) : (null)
+            }
           </div>
         </div>
       </div>

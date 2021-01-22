@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import NewsDetailsPageBody from '../components/NewsDetailsPageComponents/NewsDetailsPageBody';
+import { newsContext } from '../contexts/NewsContext';
 
-const NewsDetailsPage = () => {
+const NewsDetailsPage = (props) => {
+  // для скрола вверх
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  const { getNewsDetails } = useContext(newsContext)
+
+  useEffect(() => {
+    getNewsDetails(props.match.params.id)
+  }, [props.match.params.id])
 
   const [commentOwner, setCommentOwner] = useState("")
   const [commentValue, setCommentValue] = useState("")

@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { newsContext } from '../contexts/NewsContext';
 
 const Footer = () => {
+  const { getCategories, categories } = useContext(newsContext)
+  useEffect(() => {
+    getCategories()
+  }, [])
+  console.log(categories)
+
   return (
     <footer className="footer">
       <div className="container">
         <ul className="nav hidden-print">
-          <li><a href="/vlast/">Власть</a></li>
-          <li><a href="/obschestvo/">Общество</a></li>
-          <li><a href="/ekonomika/">Экономика</a></li>
-          <li><a href="/proisshestvija/">Происшествия</a></li>
-          <li><a href="/sport/">Спорт</a></li>
-          <li><a href="/whatsapp/">Агент 024</a></li>
-          <li><a href="/tehnoblog/">Техноблог</a></li>
-          <li><a href="/kyrgyzcha/">Кыргызча</a></li>
-          <li><a href="/english/">English</a></li>
-          <li><a href="/biznes_info/">Бизнес</a></li>
-          <li><a href="/video/">Видео</a></li>
+          {categories ? (
+            categories.results.map((item, index) => (
+              <li key={item.id}><Link to={`/news-by-category/${index + 3}`}><span>{item.title_category}</span></Link></li>
+            ))
+          ) : (
+              null
+            )
+          }
         </ul>
         <div className="row">
           <div className="col-lg-9 col-md-9 col-sm-8 col-xs-12">
@@ -33,11 +38,11 @@ const Footer = () => {
               alt="Индекс цитирования" border="0" /></a>.
           <a href="https://metrika.yandex.ru/stat/?id=22715299&amp;from=informer"
               target="_blank" rel="nofollow"><img src="3_0_FFFFFFFF_FFFFFFFF_0_pageviews"
-                style={{width: 88, height: 31, border: 0}} alt="Яндекс.Метрика"
+                style={{ width: 88, height: 31, border: 0 }} alt="Яндекс.Метрика"
                 title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" /></a>
             {/* <!-- /Yandex.Metrika informer -->
           <!-- Yandex.Metrika counter --> <noscript> */}
-            <div><img src="1" style={{position: "absolute", left: -9999}} alt /> </div>
+            <div><img src="1" style={{ position: "absolute", left: -9999 }} alt /> </div>
           </div>
         </div>
         <div className="row copy">

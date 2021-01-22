@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { newsContext } from '../contexts/NewsContext';
 import nurpressLogo from '../img/nurpress-logo.png'
 
-const Navbar = () => {
+const Navbar = (props) => {
 
-  const { getCurrency, currencies, getCategories, categories } = useContext(newsContext)
+  const { getCurrency, currencies, getCategories, categories, getNewsByCategory } = useContext(newsContext)
   const [date, setDate] = useState({})
 
   setInterval(() => {
@@ -66,10 +67,10 @@ const Navbar = () => {
         </div>
       </div>
       <header className="row hidden-print">
-        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-5 logo"> <a href="/"> <img className="visible-lg visible-xs"
+        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-5 logo"> <Link to="/"> <img className="visible-lg visible-xs"
           src={nurpressLogo} alt="www.24.kg - КЫРГЫЗСТАН" /><img className="visible-md" src="img/logo-md.png"
             alt="www.24.kg - КЫРГЫЗСТАН" /><img className="visible-sm" src="img/logo-sm.png" alt="www.24.kg - КЫРГЫЗСТАН" />
-        </a> </div>
+        </Link> </div>
         <div className="col-lg-2 col-md-2 col-sm-2 lang hidden-xs">
           <div> <a href="/kyrgyzcha/">Кыр</a> <a href="/english/">Eng</a> <a href="/archive/ru/" rel="nofollow">Архив</a>
           </div>
@@ -139,9 +140,11 @@ const Navbar = () => {
           <div className="title hidden-sm hidden-md hidden-lg"><i className="fa fa-bars" aria-hidden="true"></i> Рубрикатор <span
             className="close closeMainMenu"><i className="fa fa-times" aria-hidden="true"></i></span> </div>
           <ul className="nav navbar-nav">
-            {categories.map(item => (
-              <li key={item.id}><a href="/vlast/"><span>{item.title_category}</span></a></li>
-            ))}
+            {categories ? (
+              categories.results.map((item, index) => (
+                <li key={item.id}><Link to={`/news-by-category/${index + 3}`}><span>{item.title_category}</span></Link></li>
+              ))
+            ) : (null)}
           </ul>
         </div>
       </nav>

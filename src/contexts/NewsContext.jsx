@@ -1,14 +1,17 @@
 import axios from 'axios';
 import React, { createContext, useReducer } from 'react';
+import { act } from 'react-dom/test-utils';
 import { CATEGORIES_API, CURRENCY_API, NEWS_API } from '../helpers/const';
 
 export const newsContext = createContext()
 
 const INIT_STATE = {
-  news: [],
-  economicsNews: [],
+  news: null,
+  economicsNews: null,
   currencies: [],
-  categories: []
+  categories: null,
+  newsDetails: null,
+  newsByCategory: null
 }
 
 const reducer = (state = INIT_STATE, action) => {
@@ -20,7 +23,11 @@ const reducer = (state = INIT_STATE, action) => {
     case "GET_CURRENCY":
       return { ...state, currencies: action.payload }
     case "GET_CATEGORIES":
-      return {...state, categories: action.payload}
+      return { ...state, categories: action.payload }
+    case "GET_NEWS_DETAILS":
+      return { ...state, newsDetails: action.payload }
+    case "GET_NEWS_BY_CATEGORY":
+      return {...state, newsByCategory: action.payload}
     default:
       return { state }
   }
@@ -61,9 +68,25 @@ const NewsContextProvider = ({ children }) => {
   }
 
   async function getCategories() {
-    const { data } = await axios(`${CATEGORIES_API}`)
+    const { data } = await axios(`${NEWS_API}/category/`)
     dispatch({
       type: "GET_CATEGORIES",
+      payload: data
+    })
+  }
+
+  async function getNewsDetails(id) {
+    const { data } = await axios(`${NEWS_API}/posts/${id}/`)
+    dispatch({
+      type: "GET_NEWS_DETAILS",
+      payload: data
+    })
+  }
+
+  async function getNewsByCategory(category) {
+    const { data } = await axios(`${CATEGORIES_API}${category}`)
+    dispatch({
+      type: "GET_NEWS_BY_CATEGORY",
       payload: data
     })
   }
@@ -74,10 +97,14 @@ const NewsContextProvider = ({ children }) => {
       economicsNews: state.economicsNews,
       currencies: state.currencies,
       categories: state.categories,
+      newsDetails: state.newsDetails,
+      newsByCategory: state.newsByCategory,
       getNews,
       getEconomicsNews,
       getCurrency,
-      getCategories
+      getCategories,
+      getNewsDetails,
+      getNewsByCategory
     }}>
       {children}
     </newsContext.Provider>

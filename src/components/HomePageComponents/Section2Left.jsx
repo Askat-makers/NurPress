@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { newsContext } from '../../contexts/NewsContext';
 // let abc = new Date()
 // console.log(abc)
@@ -41,20 +42,22 @@ const Section2Left = () => {
               </div>
             </div>
             <div className="col-xs-12">
-              {news.map((item) => (
+              {news ? (
+              news.results.map((item) => (
                 <div key={item.id} className="one">
                   <div>{getMonth(item.created)}.{getDate(item.created)} {getHours(item.created)}:{getMinutes(item.created)}</div>
-                  <div className="title"> <a data-pjax="0"
-                    href="/obschestvo/180208_minobrazovaniya_soobschilo_onachale_priema_dokumentov_dlya_postupleniya_vvuzyi_turtsii/">
-                    <span>{item.title_post}</span></a>
+                  <div className="title"> <Link to={`/news-detail${item.id}`} data-pjax="0">
+                    <span>{item.title_post}</span></Link>
                   </div>
                 </div>
-              ))}
+              ))
+              ) : (null)
+            }
             </div>
             <div className="col-xs-12 hidden-print">
               <ul className="pagination">
                 <li className="prev disabled"><span>«</span></li>
-                <li className="active"><a href="/" data-page="0">1</a></li>
+                <li className="active"><Link to="/" data-page="0">1</Link></li>
                 <li><a href="/page_2/" data-page="1">2</a></li>
                 <li><a href="/page_3/" data-page="2">3</a></li>
                 <li><a href="/page_4/" data-page="3">4</a></li>
