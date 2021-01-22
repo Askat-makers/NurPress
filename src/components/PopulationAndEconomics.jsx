@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Section3 from './HomePageComponents/Section3';
 
 const PopulationAndEconomics = ({ newsArr }) => {
-  console.log(newsArr)
+  
   
   return (
     <>

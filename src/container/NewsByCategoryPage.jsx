@@ -18,7 +18,7 @@ const NewsByCategoryPage = props => {
 
   return (
     <>
-      <NewsByCategoryPageBody />
+      <NewsByCategoryPageBody props={props}/>
     </>
   );
 };

@@ -141,8 +141,8 @@ const Navbar = (props) => {
             className="close closeMainMenu"><i className="fa fa-times" aria-hidden="true"></i></span> </div>
           <ul className="nav navbar-nav">
             {categories ? (
-              categories.results.map((item, index) => (
-                <li key={item.id}><Link to={`/news-by-category/${index + 3}`}><span>{item.title_category}</span></Link></li>
+              categories.results.map(item => (
+                <li key={item.id}><Link to={`/news-by-category/${item.id}`}><span>{item.title_category}</span></Link></li>
               ))
             ) : (null)}
           </ul>

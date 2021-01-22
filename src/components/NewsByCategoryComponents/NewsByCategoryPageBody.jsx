@@ -3,9 +3,19 @@ import PopulationAndEconomics from '../PopulationAndEconomics';
 import { newsContext } from '../../contexts/NewsContext';
 import Navbar from '../Navbar'
 import Footer from '../Footer'
+import { Link, useHistory } from 'react-router-dom';
 
-const NewsByCategoryPageBody = (props) => {
+const NewsByCategoryPageBody = ({props}) => {
   const { newsByCategory, news } = useContext(newsContext)
+  let categoryId = props.match.params.category
+  function defineCategory(obj) {
+    let newArr = obj[0].category.filter(item => item.id == categoryId)
+    try{
+      return newArr[0].title_category
+    }catch(e){
+      return "Последние новости"
+    }
+  }
 
   return (
     <>
@@ -13,31 +23,31 @@ const NewsByCategoryPageBody = (props) => {
         <Navbar />
         <div className="row" id="content-wrapper">
           <div className="col-sm-8 col-xs-12">
-            <h1 className="pageTitle">Власть</h1>
-            <div className="row mainNewsinCat">
-              <div className="col-xs-12 col-md-5 col-md-push-7">
-                <h3 className="title"><a href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/">Кто станет
-                оппозицией Садыру Жапарову
-              </a></h3>
-                <div className="date">12:01, 18 января 2021</div>
-                <div className="descr hidden-sm hidden-xs"> <a
-                  href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/">10&nbsp;января досрочные
-                  выборы президента принесли Садыру Жапарову оглушительную победу. На&nbsp;состоявшемся в&nbsp;тот&nbsp;же
-                  день референдуме по&nbsp;определению формы правления избиратели проголосовали за&nbsp;президентскую
-                модель государственного устройства.</a> </div>
-              </div>
-              <div className="col-xs-12 col-md-7 col-md-pull-5 pic"> <a
-                href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/"> <img
-                  src="./Власть » www.24.kg - КЫРГЫЗСТАН_files/194790_w473_h320.jpg"
-                  alt="Кто станет оппозицией Садыру Жапарову" /> </a> </div>
-              <div className="col-xs-12 col-md-5 visible-sm visible-xs">
-                <div className="descr"> <a
-                  href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/">10&nbsp;января досрочные
-                  выборы президента принесли Садыру Жапарову оглушительную победу. На&nbsp;состоявшемся в&nbsp;тот&nbsp;же
-                  день референдуме по&nbsp;определению формы правления избиратели проголосовали за&nbsp;президентскую
-                модель государственного устройства.</a> </div>
-              </div>
-            </div>
+            {newsByCategory ? (
+              <>
+                <h1 className="pageTitle">{defineCategory(newsByCategory.results.slice(-1))}</h1>
+                <div className="row mainNewsinCat">
+                  <div className="col-xs-12 col-md-5 col-md-push-7">
+                    <h3 className="title"><a href="/">{newsByCategory.results.slice(-1)[0].title_post}</a></h3>
+                    <div className="date">12:01, 18 января 2021</div>
+                    <div className="descr hidden-sm hidden-xs">
+                      <a href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/">
+                        {`${newsByCategory.results.slice(-1)[0].description.slice(0, 300)}...`}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="col-xs-12 col-md-7 col-md-pull-5 pic"> <a
+                    href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/"> <img
+                      src="./Власть » www.24.kg - КЫРГЫЗСТАН_files/194790_w473_h320.jpg"
+                      alt="Кто станет оппозицией Садыру Жапарову" /> </a> </div>
+                  <div className="col-xs-12 col-md-5 visible-sm visible-xs">
+                    <div className="descr"> <a
+                      href="/">{newsByCategory.results.slice(-1)[0].description}</a>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (null)}
             <div className="row lineNews">
               <div className="col-xs-12 hidden-print">
                 <div className="lineTitle"> Лента новостей <a href="https://24.kg/english/"
@@ -50,11 +60,10 @@ const NewsByCategoryPageBody = (props) => {
               <div className="col-xs-12">
                 {newsByCategory ? (
                   newsByCategory.results.map(item => (
-                    <div className="one">
+                    <div key={item.id} className="one">
                       <div className="time">14:30</div>
-                      <div className="title"> <a data-pjax="0"
-                        href="https://24.kg/vlast/180597_sudya_verhovnogo_suda_podozrevaemyiy_vnezakonnom_obogaschenii_lishilsya_rabotyi/">
-                        <span>{item.title_post}</span></a>
+                      <div className="title"> <Link data-pjax="0" to={`/news-detail${item.id}`}>
+                        <span>{item.title_post}</span></Link>
                       </div>
                     </div>
                   ))
@@ -76,11 +85,11 @@ const NewsByCategoryPageBody = (props) => {
             </div>
           </div>
           <div className="col-sm-4 hidden-xs hidden-print">
-            <div id="d7_w7" className="mgb40 hidden-print"
+            {/* <div id="d7_w7" className="mgb40 hidden-print"
               data-ox-phs="{&quot;47&quot;:{&quot;min&quot;:1200},&quot;84&quot;:{&quot;min&quot;:992,&quot;max&quot;:1199},&quot;85&quot;:{&quot;min&quot;:768,&quot;max&quot;:991},&quot;86&quot;:{&quot;max&quot;:767}}">
               <iframe src="./Власть » www.24.kg - КЫРГЫЗСТАН_files/afr(1).html" width="100%" height="300" frameborder="0"
                 scrolling="no"></iframe>
-            </div>
+            </div> */}
             <div id="d7_w8" className="mgb40 hidden-print"
               data-ox-phs="{&quot;48&quot;:{&quot;min&quot;:1200},&quot;87&quot;:{&quot;min&quot;:992,&quot;max&quot;:1199},&quot;88&quot;:{&quot;min&quot;:768,&quot;max&quot;:991},&quot;89&quot;:{&quot;max&quot;:767}}"
               style={{ display: "none" }}></div>

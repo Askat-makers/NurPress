@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { newsContext } from '../../contexts/NewsContext';
-// let abc = new Date()
-// console.log(abc)
 const Section2Left = () => {
   const { news } = useContext(newsContext)
   function getHours(date) {
