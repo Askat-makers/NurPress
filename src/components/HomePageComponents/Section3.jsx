@@ -24,7 +24,7 @@ const Section3 = () => {
               economicsNews.results.slice(-4).map(item => (
                 <div key={item.id} className="col-sm-3 col-xs-6 ">
                   <Link to={`/news-detail${item.id}`} className="title">
-                    <img src={item.post_image} alt="PHOTO" />
+                    <img src={item.post_image[0].image} alt="PHOTO" />
                     <span>{item.title_post}</span>
                   </Link>
                 </div>

@@ -1,16 +1,23 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { newsContext } from '../../contexts/NewsContext';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
+import Pagination from '../Pagination';
 
-const SearchPageBody = ({props}) => {
-const {newsBySearch} = useContext(newsContext)
+const SearchPageBody = ({ props }) => {
+  const { newsBySearch } = useContext(newsContext)
 
+
+  const history = useHistory()
+
+  function handleClick(e) {
+    history.push(`?page=${e.target.innerText}`)
+  }
   return (
     <>
       <div className="container">
-        <Navbar props={props}/>
+        <Navbar props={props} />
         <div className="row" id="content-wrapper">
           <div className="col-sm-8 col-xs-12">
             <h1 className="pageTitle">ПОИСК ПО САЙТУ</h1>
@@ -26,28 +33,27 @@ const {newsBySearch} = useContext(newsContext)
               <div className="col-xs-12">
                 {newsBySearch ? (
                   newsBySearch.results.length ? (
-                    newsBySearch.results.map(item => (
-                      <div key={item.id} className="one">
-                        <div className="time">14:30</div>
-                        <div className="title"> <Link data-pjax="0" to={`/news-detail${item.id}`}>
-                          <span>{item.title_post}</span></Link>
+                    <>
+                      {newsBySearch.results.map(item => (
+                        <div key={item.id} className="one">
+                          <div className="time">14:30</div>
+                          <div className="title"> <Link data-pjax="0" to={`/news-detail${item.id}`}>
+                            <span>{item.title_post}</span></Link>
+                          </div>
                         </div>
+                      ))}
+                      <div className="col-xs-12 hidden-print">
+                        <Pagination number={newsBySearch.total_pages} handleClick={handleClick} />
                       </div>
-                    ))
+                    </>
                   ) : (
-                    <h2>По вашему запросу ничего найдено</h2>
-                  )
+                      <h2>По вашему запросу ничего найдено</h2>
+                    )
 
-                  ) : (
+                ) : (
                     null
                   )
                 }
-              </div>
-              <div className="col-xs-12 hidden-print">
-                <ul className="pagination">
-                  <li className="prev disabled"><span>«</span></li>
-                  <li className="next"><span>»</span></li>
-                </ul>
               </div>
             </div>
           </div>

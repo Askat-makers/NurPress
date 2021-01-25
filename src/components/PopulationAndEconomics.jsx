@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Section3 from './HomePageComponents/Section3';
 
 const PopulationAndEconomics = ({ newsArr }) => {
-  
+  console.log(newsArr)
   
   return (
     <>
@@ -20,7 +20,7 @@ const PopulationAndEconomics = ({ newsArr }) => {
             {newsArr.map(item => (
               <div key={item.id} class="col-sm-3 col-xs-6 ">
                 <Link to={`/news-detail${item.id}`} class="title">
-                  <img src={item.post_image} alt="PHOTO" />
+                  <img src={item.post_image[0].image} alt="PHOTO" />
                   <span>{item.title_post}</span></Link>
               </div>
             ))}

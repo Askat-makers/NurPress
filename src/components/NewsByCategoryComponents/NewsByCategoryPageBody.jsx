@@ -4,17 +4,27 @@ import { newsContext } from '../../contexts/NewsContext';
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 import { Link, useHistory } from 'react-router-dom';
+import Pagination from '../Pagination'
 
-const NewsByCategoryPageBody = ({props}) => {
+const NewsByCategoryPageBody = ({ props }) => {
   const { newsByCategory, news } = useContext(newsContext)
   let categoryId = props.match.params.category
   function defineCategory(obj) {
     let newArr = obj[0].category.filter(item => item.id == categoryId)
-    try{
+    try {
       return newArr[0].title_category
-    }catch(e){
+    } catch (e) {
       return "Последние новости"
     }
+  }
+  // _________________________________________
+
+  const history = useHistory()
+  function handleClick(e) {
+    let search = new URLSearchParams(props.history.location.search)
+    search.set("page", e.target.innerText)
+    let url = `${props.location.pathname}&${search.toString()}`
+    props.history.push(url)
   }
 
   return (
@@ -28,18 +38,17 @@ const NewsByCategoryPageBody = ({props}) => {
                 <h1 className="pageTitle">{defineCategory(newsByCategory.results.slice(-1))}</h1>
                 <div className="row mainNewsinCat">
                   <div className="col-xs-12 col-md-5 col-md-push-7">
-                    <h3 className="title"><a href="/">{newsByCategory.results.slice(-1)[0].title_post}</a></h3>
-                    <div className="date">12:01, 18 января 2021</div>
+                    <h3 className="title"><Link to={`/news-detail${newsByCategory.results.slice(-1)[0].id}`} >{newsByCategory.results.slice(-1)[0].title_post}</Link></h3>
+                    {/* <div className="date">12:01, 18 января 2021</div> */}
                     <div className="descr hidden-sm hidden-xs">
-                      <a href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/">
+                      <Link to={`/news-detail${newsByCategory.results.slice(-1)[0].id}`}>
                         {`${newsByCategory.results.slice(-1)[0].description.slice(0, 300)}...`}
-                      </a>
+                      </Link>
                     </div>
                   </div>
-                  <div className="col-xs-12 col-md-7 col-md-pull-5 pic"> <a
-                    href="https://24.kg/vlast/180278_kto_stanet_oppozitsiey_sadyiru_japarovu/"> <img
-                      src="./Власть » www.24.kg - КЫРГЫЗСТАН_files/194790_w473_h320.jpg"
-                      alt="Кто станет оппозицией Садыру Жапарову" /> </a> </div>
+                  <div className="col-xs-12 col-md-7 col-md-pull-5 pic"><img
+                    src={newsByCategory.results.slice(-1)[0].post_image[0].image}
+                    alt="Кто станет оппозицией Садыру Жапарову" /></div>
                   <div className="col-xs-12 col-md-5 visible-sm visible-xs">
                     <div className="descr"> <a
                       href="/">{newsByCategory.results.slice(-1)[0].description}</a>
@@ -61,7 +70,7 @@ const NewsByCategoryPageBody = ({props}) => {
                 {newsByCategory ? (
                   newsByCategory.results.map(item => (
                     <div key={item.id} className="one">
-                      <div className="time">14:30</div>
+                      {/* <div className="time">14:30</div> */}
                       <div className="title"> <Link data-pjax="0" to={`/news-detail${item.id}`}>
                         <span>{item.title_post}</span></Link>
                       </div>
@@ -69,18 +78,13 @@ const NewsByCategoryPageBody = ({props}) => {
                   ))
                 ) : (null)
                 }
-              </div>
-              <div className="col-xs-12 hidden-print">
-                <ul className="pagination">
-                  <li className="prev disabled"><span>«</span></li>
-                  <li className="active"><a href="https://24.kg/vlast/" data-page="0">1</a></li>
-                  <li><a href="https://24.kg/vlast/page_2/" data-page="1">2</a></li>
-                  <li><a href="https://24.kg/vlast/page_3/" data-page="2">3</a></li>
-                  <li><a href="https://24.kg/vlast/page_4/" data-page="3">4</a></li>
-                  <li><a href="https://24.kg/vlast/page_5/" data-page="4">5</a></li>
-                  <li><a href="https://24.kg/vlast/page_6/" data-page="5">6</a></li>
-                  <li className="next"><a href="https://24.kg/vlast/page_2/" data-page="1">»</a></li>
-                </ul>
+                {
+                  newsByCategory ? (
+                    <div className="col-xs-12 hidden-print">
+                      <Pagination number={newsByCategory.total_pages} handleClick={handleClick} />
+                    </div>
+                  ) : (null)
+                }
               </div>
             </div>
           </div>

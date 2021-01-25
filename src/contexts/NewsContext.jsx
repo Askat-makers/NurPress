@@ -33,7 +33,7 @@ const reducer = (state = INIT_STATE, action) => {
     case "GET_NEWS_BY_SEARCH":
       return { ...state, newsBySearch: action.payload }
     case "GET_NEWS_BY_TAG":
-      return {...state, newsByTag: action.payload}
+      return { ...state, newsByTag: action.payload }
     default:
       return { state }
   }
@@ -90,7 +90,7 @@ const NewsContextProvider = ({ children }) => {
     })
   }
 
-  async function getNewsByCategory(category) {
+  async function getNewsByCategory(category, page=1) {
     const { data } = await axios(`${CATEGORIES_API}${category}`)
     dispatch({
       type: "GET_NEWS_BY_CATEGORY",
@@ -116,6 +116,12 @@ const NewsContextProvider = ({ children }) => {
     })
   }
 
+  // ___________________________________________________
+
+  async function postComment(comment) {
+    await axios.post(`${NEWS_API}/comments/`, comment)
+  }
+
   return (
     <newsContext.Provider value={{
       news: state.news,
@@ -133,7 +139,8 @@ const NewsContextProvider = ({ children }) => {
       getNewsDetails,
       getNewsByCategory,
       getNewsBySearch,
-      getNewsByTag
+      getNewsByTag,
+      postComment
     }}>
       {children}
     </newsContext.Provider>

@@ -13,7 +13,7 @@ const Section2Right = () => {
           <div className="row">
             {news ? (
               <div className="col-xs-6 col-num-0"> <a href="/obschestvo/180255_vozvraschenie_vshkolu_nadolgoli/"
-                className="title"> <img src={news.results[news.results.length - 1].post_image} alt="Возвращение в&amp;nbsp;школу. Надолго&amp;nbsp;ли?" /> <span>{news.results[news.results.length - 1].title_post}</span> </a>
+                className="title"> <img src={news.results[news.results.length - 1].post_image[0].image} alt="Возвращение в&amp;nbsp;школу. Надолго&amp;nbsp;ли?" /> <span>{news.results[news.results.length - 1].title_post}</span> </a>
               </div>
             ) : (null)}
             <div className="col-xs-6 col-num-1">
@@ -53,7 +53,7 @@ const Section2Right = () => {
                 news.results.map(item => (
                   <div key={item.id} className="col-xs-6 col-num-0"> <a
                     href="/vlast/179900_zachem_nam_premer_ekspertyi_ovozmojnyih_kandidatah_nadoljnost_glavyi_kabmina/"
-                    className="title"> <img src={item.post_image} alt="" /> <span>{item.title_post}</span> </a>
+                    className="title"> <img src={item.post_image[0].image} alt="" /> <span>{item.title_post}</span> </a>
                   </div>
                 ))
               ) : (null)

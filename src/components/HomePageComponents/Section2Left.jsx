@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { newsContext } from '../../contexts/NewsContext';
+import Pagination from '../Pagination';
 const Section2Left = () => {
   const { news } = useContext(newsContext)
   function getHours(date) {
@@ -30,13 +31,9 @@ const Section2Left = () => {
 
   const history = useHistory()
 
-  function handleClick() {
-    history.push("?page=2")
+  function handleClick(e) {
+    history.push(`?page=${e.target.innerText}`)
   }
-  function paginationCount(arr){
-    let pageCount = Math.floor()
-  }
-
   return (
     <>
       <div className="col-lg-6 col-md-6 col-sm-6">
@@ -53,19 +50,15 @@ const Section2Left = () => {
               {news ? (
                 <>
                   {news.results.map((item) => (
-                    <div key={item.id} className="one">
-                      <div>{getMonth(item.created)}.{getDate(item.created)} {getHours(item.created)}:{getMinutes(item.created)}</div>
+                    <div key={item.id} className="one" >
+                      <div style={{color: "#818a93", fontWeight: 700, fontSize: 14}}>{getMonth(item.created)}.{getDate(item.created)} {getHours(item.created)}:{getMinutes(item.created)}</div>
                       <div className="title"> <Link to={`/news-detail${item.id}`} data-pjax="0">
                         <span>{item.title_post}</span></Link>
                       </div>
                     </div>
                   ))}
                   < div className="col-xs-12 hidden-print">
-                    <ul className="pagination">
-
-                      <li className="prev"><span>«</span></li>
-                      <li onClick={handleClick} className="next"><span>»</span></li>
-                    </ul>
+                    <Pagination number={news.total_pages} handleClick={handleClick}/>
                   </div>
                 </>
               ) : (null)

@@ -8,6 +8,13 @@ const Section1 = () => {
     setState(news)
   }, [news])
 
+  // ___________________________________________
+  
+  // let one = document.getElementsByTagName("p")
+
+
+  console.log(news)
+
   return (
     <>
       <div className="row">
@@ -26,7 +33,7 @@ const Section1 = () => {
         <div className="col-sm-9 col-xs-12">
           <div className="mainNews">
             <div className="mainNewsOne">
-              {state ? (
+              {/* {state ? (
                 <div key={state.results[state.results.length - 1].id} className="one active"> <a
                   href="/vlast/180326_vproekte_novoy_redaktsii_konstitutsii_tsenzuryi_nebudet_ona_zapreschena_/"
                   className="one-image"> <img src={state.results[state.results.length - 1].post_image} /> </a>
@@ -35,14 +42,12 @@ const Section1 = () => {
                 </div>
               ) : (
                 null
-              )}
+              )} */}
               {news ? (
                 news.results.map((item) => (
-                  <div key={item.id} className="one"> <a
-                    href="/vlast/180326_vproekte_novoy_redaktsii_konstitutsii_tsenzuryi_nebudet_ona_zapreschena_/"
-                    className="one-image"> <img src={item.post_image} /> </a>
-                    <div className="h2"> <a
-                      href="#"><span>{item.title_post}</span></a> </div>
+                  <div key={item.id} className="one active"> <a href="#askat"
+                    className="one-image"> <img src={item.post_image[0].image} /> </a>
+                    <div className="h2"> <a href="#"><span>{item.title_post}</span></a> </div>
                   </div>
                 ))
               ) : (null)
@@ -53,7 +58,7 @@ const Section1 = () => {
                 news.results.map((item) => (
                   <div key={item.id} className="hidden-xs"> <a
                     href="#"
-                    className=" active"><span>{item.title_post}</span></a>
+                    className="active"><span>{item.title_post}</span></a>
                   </div>
                 ))
               ) : (null)

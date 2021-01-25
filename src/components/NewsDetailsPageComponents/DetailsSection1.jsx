@@ -5,16 +5,34 @@ import PopulationAndEconomics from '../PopulationAndEconomics';
 
 const DetailsSection1 = () => {
 
-  const { newsDetails, getNewsByCategory, newsByCategory, getNews, news, getNewsByTag, newsByTag } = useContext(newsContext)
+  const { newsDetails, getNewsByCategory, newsByCategory, getNews, news, getNewsByTag, newsByTag, postComment } = useContext(newsContext)
   const history = useHistory()
   useEffect(() => {
     getNews()
   }, [])
 
   function getTags() {
-    console.log(newsDetails)
-    getNewsByTag(newsDetails.tags[0])
+    // console.log(newsDetails)
+    // getNewsByTag(newsDetails.tags[0])
   }
+  // _________________________________________
+  const [comment, setComment] = useState({})
+
+  function handleInput(e){
+    let obj = {
+      ...comment,
+      [e.target.name]: e.target.value,
+      email: "ASKAT@gmail.com",
+      post_id: newsDetails.id
+    }
+    setComment(obj)
+  }
+  function handleClick(obj){
+    // obj.comments.push(comment)
+    postComment(comment)
+  }
+
+  
 
   return (
     <>
@@ -76,7 +94,7 @@ const DetailsSection1 = () => {
                   </noindex>
                   <div className="row mgb30 hidden-print">
                     <div className="col-xs-12 col-sm-8 newsLink">Ссылка: <span id="article-link">https://localhost:3000{history.location.pathname}</span> <a href="javascript:;" className="clipboard" data-clipboard-target="#article-link" data-title="Ссылка скопирована" style={{ fontSize: 13 }} data-original-title=""
-                      title=""><i className="fa fa-clipboard"></i></a> <br /> просмотров: 410 </div>
+                      title=""><i className="fa fa-clipboard"></i></a> <br /> просмотров: {newsDetails.views} </div>
                     <div className="col-xs-12 col-sm-4 text-right newsPrintLink"> <a href="javascript:window.print();"><i
                       className="fa fa-print" aria-hidden="true"></i> Версия для печати </a> </div>
                   </div>
@@ -101,13 +119,13 @@ const DetailsSection1 = () => {
                   <div className="col-xs-12">
                     <div className="one">
                       <div>
-                        <input style={{ backgroundColor: "#edebeb", width: "100%", marginBottom: 20, padding: 10 }} placeholder="Ваше имя" type="text" />
+                        <input onChange={handleInput} name="full_name" style={{ backgroundColor: "#edebeb", width: "100%", marginBottom: 20, padding: 10 }} placeholder="Ваше имя" type="text" />
                       </div>
                       <div>
-                        <textarea style={{ backgroundColor: "#edebeb", width: "100%", padding: 10 }} placeholder="Ваш комментарии" name="" id="" cols="30" rows="10"></textarea>
+                        <textarea onChange={handleInput} name="comment" style={{ backgroundColor: "#edebeb", width: "100%", padding: 10 }} placeholder="Ваш комментарии" cols="30" rows="10"></textarea>
                       </div>
                       <div>
-                        <button style={{ width: "100%", padding: "10px 0", backgroundColor: "#064b67", color: "white", marginTop: 5 }}>Отправить комментарии</button>
+                        <button onClick={() => handleClick(newsDetails)} style={{ width: "100%", padding: "10px 0", backgroundColor: "#064b67", color: "white", marginTop: 5 }}>Отправить комментарии</button>
                       </div>
                       <div className="title">
                         {/* <span>САЛАМ</span> */}

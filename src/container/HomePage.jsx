@@ -10,7 +10,6 @@ const HomePage = (props) => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  console.log(props.history.location.search)
 
   const { getNews } = useContext(newsContext)
   useEffect(() => {

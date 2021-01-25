@@ -1,14 +1,17 @@
 import React from 'react';
 
-const Pagination = () => {
+const Pagination = (props) => {
+  let arr = []
+  for (let i = 1; i <= props.number; i++) {
+    arr.push(i)
+  }
   return (
     <>
-      <div className="col-xs-12 hidden-print">
-        <ul className="pagination">
-          <li className="prev"><span>«</span></li>
-          <li className="next"><span>»</span></li>
-        </ul>
-      </div>
+      <ul className="pagination">
+        {arr.map(item => (
+          <li onClick={props.handleClick} className="prev"><span>{item}</span></li>
+        ))}
+      </ul>
     </>
   );
 };
