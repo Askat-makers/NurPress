@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { newsContext } from '../../contexts/NewsContext';
 const Section2Left = () => {
   const { news } = useContext(newsContext)
@@ -11,20 +11,30 @@ const Section2Left = () => {
   function getMinutes(date) {
     let a = new Date(date)
     let min = a.getMinutes()
-    if(min < 10) return `0${min}`
+    if (min < 10) return `0${min}`
     return min
   }
-  function getMonth(date){
+  function getMonth(date) {
     let a = new Date(date)
     let month = a.getMonth()
-    if(month == 0) return `01`
-    if(month < 10) return `0${month}`
+    if (month == 0) return `01`
+    if (month < 10) return `0${month}`
     return month
   }
-  function getDate(date){
+  function getDate(date) {
     let a = new Date(date)
     let day = a.getDate()
     return day
+  }
+  // _________________________________________
+
+  const history = useHistory()
+
+  function handleClick() {
+    history.push("?page=2")
+  }
+  function paginationCount(arr){
+    let pageCount = Math.floor()
   }
 
   return (
@@ -41,28 +51,25 @@ const Section2Left = () => {
             </div>
             <div className="col-xs-12">
               {news ? (
-              news.results.map((item) => (
-                <div key={item.id} className="one">
-                  <div>{getMonth(item.created)}.{getDate(item.created)} {getHours(item.created)}:{getMinutes(item.created)}</div>
-                  <div className="title"> <Link to={`/news-detail${item.id}`} data-pjax="0">
-                    <span>{item.title_post}</span></Link>
+                <>
+                  {news.results.map((item) => (
+                    <div key={item.id} className="one">
+                      <div>{getMonth(item.created)}.{getDate(item.created)} {getHours(item.created)}:{getMinutes(item.created)}</div>
+                      <div className="title"> <Link to={`/news-detail${item.id}`} data-pjax="0">
+                        <span>{item.title_post}</span></Link>
+                      </div>
+                    </div>
+                  ))}
+                  < div className="col-xs-12 hidden-print">
+                    <ul className="pagination">
+
+                      <li className="prev"><span>«</span></li>
+                      <li onClick={handleClick} className="next"><span>»</span></li>
+                    </ul>
                   </div>
-                </div>
-              ))
+                </>
               ) : (null)
-            }
-            </div>
-            <div className="col-xs-12 hidden-print">
-              <ul className="pagination">
-                <li className="prev disabled"><span>«</span></li>
-                <li className="active"><Link to="/" data-page="0">1</Link></li>
-                <li><a href="/page_2/" data-page="1">2</a></li>
-                <li><a href="/page_3/" data-page="2">3</a></li>
-                <li><a href="/page_4/" data-page="3">4</a></li>
-                <li><a href="/page_5/" data-page="4">5</a></li>
-                <li><a href="/page_6/" data-page="5">6</a></li>
-                <li className="next"><a href="/page_2/" data-page="1">»</a></li>
-              </ul>
+              }
             </div>
             <div className="row hidden-print">
               <div className="col-xs-12">

@@ -11,7 +11,9 @@ const INIT_STATE = {
   currencies: [],
   categories: null,
   newsDetails: null,
-  newsByCategory: null
+  newsByCategory: null,
+  newsBySearch: null,
+  newsByTag: null
 }
 
 const reducer = (state = INIT_STATE, action) => {
@@ -27,7 +29,11 @@ const reducer = (state = INIT_STATE, action) => {
     case "GET_NEWS_DETAILS":
       return { ...state, newsDetails: action.payload }
     case "GET_NEWS_BY_CATEGORY":
-      return {...state, newsByCategory: action.payload}
+      return { ...state, newsByCategory: action.payload }
+    case "GET_NEWS_BY_SEARCH":
+      return { ...state, newsBySearch: action.payload }
+    case "GET_NEWS_BY_TAG":
+      return {...state, newsByTag: action.payload}
     default:
       return { state }
   }
@@ -51,8 +57,8 @@ const NewsContextProvider = ({ children }) => {
     })
   }
 
-  async function getNews() {
-    const { data } = await axios(`${NEWS_API}/posts`)
+  async function getNews(page) {
+    const { data } = await axios(`${NEWS_API}/posts${page}`)
     console.log(data)
     dispatch({
       type: "GET_NEWS",
@@ -92,6 +98,24 @@ const NewsContextProvider = ({ children }) => {
     })
   }
 
+  async function getNewsBySearch(word) {
+    const { data } = await axios(`${NEWS_API}/posts/?search=${word}`)
+    dispatch({
+      type: "GET_NEWS_BY_SEARCH",
+      payload: data
+    })
+  }
+
+  // ___________________________________________________
+
+  async function getNewsByTag(tagId) {
+    const { data } = await axios(`${NEWS_API}/posts?tags=${tagId}`)
+    dispatch({
+      type: "GET_NEWS_BY_TAG",
+      payload: data
+    })
+  }
+
   return (
     <newsContext.Provider value={{
       news: state.news,
@@ -100,12 +124,16 @@ const NewsContextProvider = ({ children }) => {
       categories: state.categories,
       newsDetails: state.newsDetails,
       newsByCategory: state.newsByCategory,
+      newsBySearch: state.newsBySearch,
+      newsByTag: state.newsByTag,
       getNews,
       getEconomicsNews,
       getCurrency,
       getCategories,
       getNewsDetails,
-      getNewsByCategory
+      getNewsByCategory,
+      getNewsBySearch,
+      getNewsByTag
     }}>
       {children}
     </newsContext.Provider>

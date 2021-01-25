@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { newsContext } from '../contexts/NewsContext';
 import nurpressLogo from '../img/nurpress-logo.png'
 
-const Navbar = (props) => {
+const Navbar = ({props}) => {
 
   const { getCurrency, currencies, getCategories, categories, getNewsByCategory } = useContext(newsContext)
   const [date, setDate] = useState({})
@@ -37,6 +37,19 @@ const Navbar = (props) => {
     getCategories()
     getCurrency()
   }, [])
+
+  // _____________________________________________________________________________
+  // search 
+  // const [searchWord, setSearchWord] = useState("")
+  const history = useHistory()
+  const [searchWord, setSearchWord] = useState("")
+  function handleInput(e){
+    setSearchWord(e.target.value)
+  }
+  function handleClick(e){
+    e.stopPropagation()
+    history.push(`/search/${searchWord}`)
+  }
 
   return (
     <>
@@ -88,10 +101,10 @@ const Navbar = (props) => {
                           target="_blank" href="https://wa.me/996555312024"><i className="fa fa-whatsapp" aria-hidden="true"></i></a>
           </div>
           <div className="search">
-            <form id="w12" action="/poisk_po_sajtu/" method="get">
+            <form onSubmit={handleClick} >
               <div className="input-group"> <span className="input-group-btn"> <button className="btn btn-default" type="submit"> <i
                 className="fa fa-search" aria-hidden="true"></i> </button> </span>
-                <input type="text" id="searchform-text" className="form-control" name="SearchForm[text]" placeholder="Поиск" />
+                <input value={searchWord} onChange={handleInput} type="text" id="" className="form-control" placeholder="Поиск" />
               </div>
             </form>
           </div>

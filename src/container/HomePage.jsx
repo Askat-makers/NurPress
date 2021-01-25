@@ -3,17 +3,19 @@ import { useLocation } from 'react-router-dom';
 import HomePageBody from '../components/HomePageComponents/HomePageBody';
 import { newsContext } from '../contexts/NewsContext';
 
-const HomePage = () => {
+const HomePage = (props) => {
   // для скрола вверх
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  console.log(props.history.location.search)
+
   const { getNews } = useContext(newsContext)
   useEffect(() => {
-    getNews()
-  }, [])
+    getNews(props.history.location.search)
+  }, [props.history.location.search])
   return (
     <div>
       <HomePageBody />

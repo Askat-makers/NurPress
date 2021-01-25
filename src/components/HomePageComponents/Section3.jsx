@@ -21,7 +21,7 @@ const Section3 = () => {
         <div className="row blockNews">
           <div className="row">
             {economicsNews ? (
-              economicsNews.results.map(item => (
+              economicsNews.results.slice(-4).map(item => (
                 <div key={item.id} className="col-sm-3 col-xs-6 ">
                   <Link to={`/news-detail${item.id}`} className="title">
                     <img src={item.post_image} alt="PHOTO" />

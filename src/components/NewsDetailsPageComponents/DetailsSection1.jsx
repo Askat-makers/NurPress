@@ -5,11 +5,16 @@ import PopulationAndEconomics from '../PopulationAndEconomics';
 
 const DetailsSection1 = () => {
 
-  const { newsDetails, getNewsByCategory, newsByCategory, getNews, news } = useContext(newsContext)
+  const { newsDetails, getNewsByCategory, newsByCategory, getNews, news, getNewsByTag, newsByTag } = useContext(newsContext)
   const history = useHistory()
   useEffect(() => {
     getNews()
   }, [])
+
+  function getTags() {
+    console.log(newsDetails)
+    getNewsByTag(newsDetails.tags[0])
+  }
 
   return (
     <>
@@ -95,15 +100,15 @@ const DetailsSection1 = () => {
                   </div>
                   <div className="col-xs-12">
                     <div className="one">
-                        <div>
-                          <input style={{ backgroundColor: "#edebeb", width: "100%", marginBottom: 20, padding: 10 }} placeholder="Ваше имя" type="text" />
-                        </div>
-                        <div>
-                          <textarea style={{ backgroundColor: "#edebeb", width: "100%", padding: 10 }} placeholder="Ваш комментарии" name="" id="" cols="30" rows="10"></textarea>
-                        </div>
-                        <div>
-                          <button style={{width: "100%", padding: "10px 0", backgroundColor: "#064b67", color: "white", marginTop: 5}}>Отправить комментарии</button>
-                        </div>
+                      <div>
+                        <input style={{ backgroundColor: "#edebeb", width: "100%", marginBottom: 20, padding: 10 }} placeholder="Ваше имя" type="text" />
+                      </div>
+                      <div>
+                        <textarea style={{ backgroundColor: "#edebeb", width: "100%", padding: 10 }} placeholder="Ваш комментарии" name="" id="" cols="30" rows="10"></textarea>
+                      </div>
+                      <div>
+                        <button style={{ width: "100%", padding: "10px 0", backgroundColor: "#064b67", color: "white", marginTop: 5 }}>Отправить комментарии</button>
+                      </div>
                       <div className="title">
                         {/* <span>САЛАМ</span> */}
                       </div>
@@ -113,15 +118,20 @@ const DetailsSection1 = () => {
                 <div className="row lineNews mgb40 hidden-print">
                   <div className="col-xs-12">
                     <div className="lineTitle"> Материалы по теме
-                            <div className="line" style={{ marginBottom: 10 }}></div>
+                      <div className="line" style={{ marginBottom: 10 }}></div>
                     </div>
                   </div>
+                  {getTags()}
                   <div className="col-xs-12">
-                    <div className="one">
-                      <div className="title"> <a data-pjax="0" href="/">
-                        <span>САЛАМ</span></a>
-                      </div>
-                    </div>
+                    {newsByTag ? (
+                      newsByTag.results.map(item => (
+                        <div className="one">
+                          <div className="title"> <a data-pjax="0" href="/">
+                            <span>{item.title_post}</span></a>
+                          </div>
+                        </div>
+                      ))
+                    ) : (null)}
                   </div>
                 </div>
                 <div className="row">
