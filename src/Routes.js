@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Example from './components/HomePageComponents/Example';
-import Navbar from './components/Navbar';
 import HomePage from './container/HomePage';
 import NewsByCategoryPage from './container/NewsByCategoryPage';
 import NewsDetailsPage from './container/NewsDetailsPage';

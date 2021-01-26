@@ -3,9 +3,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { newsContext } from '../contexts/NewsContext';
 import nurpressLogo from '../img/nurpress-logo.png'
 
-const Navbar = ({props}) => {
+const Navbar = ({ props }) => {
 
-  const { getCurrency, currencies, getCategories, categories, getNewsByCategory } = useContext(newsContext)
+  const { getCurrency, currencies, getCategories, categories } = useContext(newsContext)
   const [date, setDate] = useState({})
 
   setInterval(() => {
@@ -43,10 +43,10 @@ const Navbar = ({props}) => {
   // const [searchWord, setSearchWord] = useState("")
   const history = useHistory()
   const [searchWord, setSearchWord] = useState("")
-  function handleInput(e){
+  function handleInput(e) {
     setSearchWord(e.target.value)
   }
-  function handleClick(e){
+  function handleClick(e) {
     e.stopPropagation()
     history.push(`/search/${searchWord}`)
   }
@@ -56,26 +56,26 @@ const Navbar = ({props}) => {
       <div className="topBanner hidden-print">
         <div className="container">
           <div id="3b_w8"
-            data-ox-phs="{&quot;36&quot;:{&quot;min&quot;:1200},&quot;51&quot;:{&quot;min&quot;:992,&quot;max&quot;:1199},&quot;52&quot;:{&quot;min&quot;:768,&quot;max&quot;:991},&quot;53&quot;:{&quot;max&quot;:767}}"
+            data-ox-phs="{36:{min:1200},51:{min:992,max:1199},52:{min:768,max:991},53:{max:767}}"
             style={{ display: 'none' }}></div>
         </div>
       </div>
       <div className="bottomBanner hidden-print" style={{ display: 'none' }}>
         <div className="container"> <a href="#" className="close-banner"><i className="fa fa-times-circle-o"></i></a>
           <div id="3b_w9"
-            data-ox-phs="{&quot;133&quot;:{&quot;min&quot;:1200},&quot;134&quot;:{&quot;min&quot;:992,&quot;max&quot;:1199},&quot;135&quot;:{&quot;min&quot;:768,&quot;max&quot;:991},&quot;136&quot;:{&quot;max&quot;:767}}"
+            data-ox-phs="{133:{min:1200},134:{min:992,max:1199},135:{min:768,max:991},136:{max:767}}"
             style={{ display: 'none' }}></div>
         </div>
       </div>
       <div className="side-banners hidden-print">
         <div className="side-banners-item side-banners-left" style={{ width: 40 }}>
           <div id="3b_w10"
-            data-ox-phs="{&quot;129&quot;:{&quot;min&quot;:1200},&quot;130&quot;:{&quot;min&quot;:992,&quot;max&quot;:1199},&quot;131&quot;:{&quot;min&quot;:768,&quot;max&quot;:991}}"
+            data-ox-phs="{129:{min:1200},130:{min:992,max:1199},131:{min:768,max:991}}"
             style={{ display: 'none' }}></div>
         </div>
         <div className="side-banners-item side-banners-right" style={{ width: 40 }}>
           <div id="3b_w11"
-            data-ox-phs="{&quot;132&quot;:{&quot;min&quot;:1200},&quot;130&quot;:{&quot;min&quot;:992,&quot;max&quot;:1199},&quot;131&quot;:{&quot;min&quot;:768,&quot;max&quot;:991}}"
+            data-ox-phs="{132:{min:1200},130:{min:992,max:1199},131:{min:768,max:991}}"
             style={{ display: 'none' }}></div>
         </div>
       </div>
@@ -90,15 +90,28 @@ const Navbar = ({props}) => {
           <div><a href="/about/services.html">Наши услуги</a></div>
         </div>
         <div className="col-lg-5 col-md-4 col-sm-4 hidden-xs socCont">
-          <div className="social"> <a target="_blank" href="https://www.facebook.com/www.24.kg/" rel="nofollow"><i
-            className="fa fa-facebook" aria-hidden="true"></i></a> <a target="_blank" href="https://twitter.com/_24_kg"
-              rel="nofollow"><i className="fa fa-twitter" aria-hidden="true"></i></a> <a target="_blank"
-                href="https://www.youtube.com/channel/UCkKzgNm1_pyPPHKigI75MoQ" rel="nofollow"><i className="fa fa-youtube-play"
-                  aria-hidden="true"></i></a> <a target="_blank" href="https://ok.ru/ia24.kgkyr/topics"><i
-                    className="fa fa-odnoklassniki" aria-hidden="true"></i></a> <a target="_blank"
-                      href="https://www.instagram.com/24_kg/"><i className="fa fa-instagram" aria-hidden="true"></i></a> <a
-                        target="_blank" href="https://t.me/news24kg/"><i className="fa fa-telegram" aria-hidden="true"></i></a> <a
-                          target="_blank" href="https://wa.me/996555312024"><i className="fa fa-whatsapp" aria-hidden="true"></i></a>
+          <div className="social">
+            <a target="_blank" href="https://www.facebook.com/profile.php?id=100052561304911" rel="nofollow">
+              <i className="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a target="_blank" href="https://twitter.com/MOYoMYd01Buh1Ex" rel="nofollow">
+              <i className="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a target="_blank" href="https://www.youtube.com/channel/UCbmZoqKCRKuXv8ejoL7kYCg" rel="nofollow">
+              <i className="fa fa-youtube-play" aria-hidden="true"></i>
+            </a>
+            <a target="_blank" href="https://ok.ru/ia24.kgkyr/topics">
+              <i className="fa fa-odnoklassniki" aria-hidden="true"></i>
+            </a>
+            <a target="_blank" href="https://www.instagram.com/nur.press/?hl=ru">
+              <i className="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a target="_blank" href="https://t.me/news24kg/">
+              <i className="fa fa-telegram" aria-hidden="true"></i>
+            </a>
+            <a target="_blank" href="https://wa.me/996555312024">
+              <i className="fa fa-whatsapp" aria-hidden="true"></i>
+            </a>
           </div>
           <div className="search">
             <form onSubmit={handleClick} >

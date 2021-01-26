@@ -18326,11 +18326,17 @@ header .currency span {
 
 .blockNews .row div {
   line-height: 1.4em;
-  margin-bottom: 20px
+  margin-bottom: 50px
 }
 
+#section-2-right-20px{
+  margin-bottom: 20px;
+}
+
+
 .blockNews .row div img {
-  margin-bottom: 8px
+  margin-bottom: 8px;
+  height: 185px;
 }
 
 .blockNews .row div a.title>span {

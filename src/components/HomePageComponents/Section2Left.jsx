@@ -18,7 +18,7 @@ const Section2Left = () => {
   function getMonth(date) {
     let a = new Date(date)
     let month = a.getMonth()
-    if (month == 0) return `01`
+    if (month === 0) return `01`
     if (month < 10) return `0${month}`
     return month
   }
